@@ -2,45 +2,129 @@
   <div id="app">
     <div class="qlEditorContainer">
       <div class="card border-primary">
-        <div class="card-body">
-          <h1
-            class="card-title"
-            style="
-              display: flex;
-              align-items: baseline;
-              flex-wrap: nowrap;
-              flex-direction: row;
-              justify-content: flex-start;
-              align-content: flex-end;
-            "
-          >
-            Email Editor
-            <h6 class="pl-2">(Supports Hebrew)</h6>
-          </h1>
-          <h5
-            style="position: absolute; right: 20px; top: 31px;"
-            v-html="message"
-          ></h5>
+        <div class="row no-gutters">
+          <div class="col-md-2 border-right">
+            <div class="card-header" style="height: 73px;">
+              <h4 class="m-0 p-2">Email Temlates</h4>
+            </div>
+            <div style="max-height: 660px;" class="overflow-auto">
+              <div class="card text-center m-3">
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">
+                    With supporting text below as a natural lead-in to
+                    additional content.
+                  </p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
 
-          <p class="card-text">
-            <vue-editor
-              ref="qlEditor"
-              id="qlEditor"
-              class="qlEditor"
-              v-model="content"
-              :editorOptions="editorSettings"
-              @ready="(quill) => (editorQuill = quill)"
-            />
-          </p>
-          <v-btn
-            color="btn btn-primary float-right"
-            elevation="3"
-            @click="saveToFile"
-            >Send Email</v-btn
-          >
-          <dir class="text-center">
-            Number of chars : {{ editorQuill ? editorQuill.getLength() : "" }}
-          </dir>
+              <div class="card text-center m-3">
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">
+                    With supporting text below as a natural lead-in to
+                    additional content.
+                  </p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+
+              <div class="card text-center m-3">
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">
+                    With supporting text below as a natural lead-in to
+                    additional content.
+                  </p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card-header">
+              <h1
+                class="card-title m-0"
+                style="
+                  display: flex;
+                  align-items: baseline;
+                  flex-wrap: nowrap;
+                  flex-direction: row;
+                  justify-content: flex-start;
+                  align-content: flex-end;
+                "
+              >
+                Email Editor
+                <h6 class="pl-2 m-0">(Supports Hebrew)</h6>
+              </h1>
+              <h5
+                style="position: absolute; right: 20px; top: 31px;"
+                v-html="message"
+              ></h5>
+            </div>
+            <div class="card-body padding: 1rem;">
+              <p class="card-text">
+                <vue-editor
+                  ref="qlEditor"
+                  id="qlEditor"
+                  class="qlEditor"
+                  v-model="content"
+                  :editorOptions="editorSettings"
+                  @ready="(quill) => (editorQuill = quill)"
+                />
+              </p>
+              <v-btn
+                color="btn btn-primary float-right"
+                elevation="3"
+                @click="saveToFile"
+                >Send Email</v-btn
+              >
+              <dir class="text-center">
+                Number of chars :
+                {{ editorQuill ? editorQuill.getLength() : "" }}
+              </dir>
+            </div>
+          </div>
+          <div class="col-md-2 border-left">
+            <div class="card-header" style="height: 73px;">
+              <h4 class="m-0 p-2">Email Temlates</h4>
+            </div>
+            <div style="max-height: 660px;" class="overflow-auto">
+              <div class="card text-center m-3">
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">
+                    With supporting text below as a natural lead-in to
+                    additional content.
+                  </p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+
+              <div class="card text-center m-3">
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">
+                    With supporting text below as a natural lead-in to
+                    additional content.
+                  </p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+
+              <div class="card text-center m-3">
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">
+                    With supporting text below as a natural lead-in to
+                    additional content.
+                  </p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

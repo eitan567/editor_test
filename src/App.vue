@@ -148,7 +148,9 @@ import { Quill } from "vue2-editor";
 import { IndentStyle } from "./assets/js/quillIndent.js";
 import jQuery from "jquery";
 import axios from "axios";
-
+import ImageResize from "quill-image-resize-module-plus";
+// import ImageResize from "quill-image-resize-module";
+Quill.register("modules/imageResize", ImageResize);
 Quill.register(IndentStyle, true);
 
 var cr = [];
@@ -245,6 +247,9 @@ export default {
     editorSettings: {
       modules: {
         toolbar: toolbar,
+        imageResize: {
+          modules: ["Resize", "DisplaySize"],
+        },
       },
     },
   }),

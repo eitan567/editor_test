@@ -128,7 +128,27 @@
         </div>
       </div>
     </div>
-
+    <div id="tooltip-controls">
+      <button id="bold-button"><i class="fa fa-bold"></i></button>
+      <button id="italic-button"><i class="fa fa-italic"></i></button>
+      <button id="link-button"><i class="fa fa-link"></i></button>
+      <button id="blockquote-button"><i class="fa fa-quote-right"></i></button>
+      <button id="header-1-button">
+        <i class="fa fa-header"><sub>1</sub></i>
+      </button>
+      <button id="header-2-button">
+        <i class="fa fa-header"><sub>2</sub></i>
+      </button>
+    </div>
+    <div id="sidebar-controls">
+      <button id="show-controls"><i class="fa fa-plus"></i></button>
+      <span class="controls">
+        <button id="image-button"><i class="fa fa-camera"></i></button>
+        <button id="video-button"><i class="fa fa-play"></i></button>
+        <button id="tweet-button"><i class="fa fa-twitter"></i></button>
+        <button id="divider-button"><i class="fa fa-minus"></i></button>
+      </span>
+    </div>
     <div id="popup">
       <input
         type="button"
@@ -146,20 +166,27 @@
 <script>
 import { Quill } from "vue2-editor";
 import { IndentStyle } from "./assets/js/quillIndent.js";
-import jQuery from "jquery";
+// import jQuery from "jquery";
 import axios from "axios";
 import ImageResize from "quill-image-resize-module-plus";
-// import ImageResize from "quill-image-resize-module";
+// import "quill-emoji/dist/quill-emoji.css";
+// import * as Emoji from "quill-emoji";
+// Quill.register("modules/emoji", Emoji);
+
+// <Quill
+//   defaultValue=""
+//   theme="snow"
+//   modules={{
+//     toolbar: toolbarOptions,
+//     "emoji-toolbar": true,
+//     "emoji-textarea": true,
+//     "emoji-shortname": true,
+//   }}
+//   value={quill_data.delta}
+// />
+
 Quill.register("modules/imageResize", ImageResize);
 Quill.register(IndentStyle, true);
-
-var cr = [];
-
-jQuery("#popup").on({
-  click: function (e) {
-    e.stopPropagation();
-  },
-});
 
 let AlignStyle = Quill.import("attributors/style/align");
 let BackgroundStyle = Quill.import("attributors/style/background");
@@ -184,32 +211,40 @@ const LineStyle = new Parchment.Attributor.Style("lineHeight", "line-height", {
 });
 Quill.register(LineStyle, true);
 
-jQuery(document).on({
-  click: function () {
-    jQuery("#popup").hide();
-  },
-  mouseup: function () {
-    cr = window.getSelection().getRangeAt(0).getClientRects();
-  },
-  mousemove: function (ev) {
-    for (var i = 0; i < cr.length; i++) {
-      if (
-        ev.pageX >= cr[i].left &&
-        ev.pageX <= cr[i].right &&
-        ev.pageY >= cr[i].top &&
-        ev.pageY <= cr[i].bottom
-      ) {
-        jQuery("#popup")
-          .css({
-            top: cr[0].top - jQuery("#popup").outerHeight(),
-            left: cr[0].left,
-          })
-          .show();
-        break;
-      }
-    }
-  },
-});
+// var cr = [];
+
+// jQuery("#popup").on({
+//   click: function (e) {
+//     e.stopPropagation();
+//   },
+// });
+
+// jQuery(document).on({
+//   click: function () {
+//     jQuery("#popup").hide();
+//   },
+//   mouseup: function () {
+//     cr = window.getSelection().getRangeAt(0).getClientRects();
+//   },
+//   mousemove: function (ev) {
+//     for (var i = 0; i < cr.length; i++) {
+//       if (
+//         ev.pageX >= cr[i].left &&
+//         ev.pageX <= cr[i].right &&
+//         ev.pageY >= cr[i].top &&
+//         ev.pageY <= cr[i].bottom
+//       ) {
+//         jQuery("#popup")
+//           .css({
+//             top: cr[0].top - jQuery("#popup").outerHeight(),
+//             left: cr[0].left,
+//           })
+//           .show();
+//         break;
+//       }
+//     }
+//   },
+// });
 
 var toolbar = {
   container: [
@@ -232,8 +267,56 @@ var toolbar = {
     [{ direction: "rtl" }],
     ["clean"],
     ["link", "image", "video", "formula"],
+    ["emoji"],
   ],
 };
+
+// Quill.register("air-bar", function (quill) {
+//   var toolbar = quill.modules.toolbar.container;
+
+//   // get the dimensions of the toolbar. Assuming that it doesn't change
+//   toolbar.style.visibility = "hidden";
+//   toolbar.style.position = "absolute";
+//   var toolbar_width = toolbar.offsetWidth, // get the width and height so we can keep it from squashing at the edge of the page
+//     toolbar_height = toolbar.offsetHeight;
+
+//   toolbar.style.display = "none"; // hide it if it's not hidden already.
+//   toolbar.style.visibility = "visible";
+//   toolbar.style.opacity = "0";
+//   toolbar.style.position = "fixed";
+//   toolbar.style.transition = "opacity 300ms, left 300ms, top 300ms";
+
+//   quill.on("selection-change", function (range) {
+//     if (range.start == range.end) {
+//       // no selection, fade out.
+//       toolbar.style.opacity = 0;
+//       setTimeout(function () {
+//         toolbar.style.display = "none";
+//       }, 300);
+//     } else {
+//       var selection_dimensions = window
+//         .getSelection()
+//         .getRangeAt(0)
+//         .getBoundingClientRect(); // see http://stackoverflow.com/a/17887684/2661831 . Probably alchemy and/or black magic.
+
+//       // if we're going to bump into the side of the window, go to the edge less 10px.
+//       if (toolbar_height + selection_dimensions.bottom > window.innerHeight) {
+//         toolbar.style.top = window.innerHeight - (toolbar_height + 10) + "px";
+//       } else {
+//         toolbar.style.top = selection_dimensions.bottom + "px";
+//       }
+
+//       if (toolbar_width + selection_dimensions.right > window.innerWidth) {
+//         toolbar.style.left = window.innerWidth - (toolbar_width + 10) + "px";
+//       } else {
+//         toolbar.style.left = selection_dimensions.right + 10 + "px";
+//       }
+
+//       toolbar.style.display = "block";
+//       toolbar.style.opacity = 1;
+//     }
+//   });
+// });
 
 export default {
   name: "App",
